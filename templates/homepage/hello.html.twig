@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Bonjour {{ nom }}</h1>
+    <ul>
+    {% for key, value in array %}
+        {#  <li>{{ key }} {{ value }}</li>#}
+        <li>{{ key | upper ~ '/' ~ value }}</li>
+    {% endfor %}
+    </ul>
+    <p>
+        Date: {{ now | date('d/m/y') }}
+    </p>
+{% endblock %}
+
+{% block title %}
+    Accueil
+{% endblock %}

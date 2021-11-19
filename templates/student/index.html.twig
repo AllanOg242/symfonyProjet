@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% for student in students %}
+        <p>
+            {{ student.firstname ~ ' ' ~ student.lastname }} /
+            {{ student.birthday | date('d/m/y')}}
+        </p>
+    {% endfor %}
+
+{% endblock %}

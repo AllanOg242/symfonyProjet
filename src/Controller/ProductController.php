@@ -2,15 +2,27 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController{
 
-    #[Route('/product/{product_name}', name: 'product.detail')]
-    public function detail(string $product_name):Response{
-        $array = [
+    public function __construct(private ProductRepository $productRepository){
+
+    }
+    #[Route('/product/index', name: 'product.index')]
+    public function index(): Response
+    {
+        return $this->render('product/index.html.twig', [
+            'products' => $this->productRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/product/{slug}', name: 'product.detail')]
+    public function detail(string $slug):Response{
+        /*$array = [
             'key1' => 'product1',
             'key2' => 'product2',
         ];
@@ -19,7 +31,15 @@ class ProductController extends AbstractController{
             'nom' => $product_name,
             'array' => $array,
             'now' => $now,
+        ]);*/
+
+        $product = $this->productRepository->findOneBy([
+            'slug'=> $slug
         ]);
+        dump($product);
+        return $this->render('product/detail.html.twig', [
+            'product' => $product
+            ]);
     }
 }
 
